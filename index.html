@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-sans); background: #fff5f7; color: #4a2030; }
+  :root { --pink: #e8748a; --pink-light: #fce8ed; --pink-dark: #c0435c; --pink-soft: #fff0f3; --text: #4a2030; --text-muted: #9b6070; }
+
+  nav { background: #fff; border-bottom: 1px solid #f5c8d4; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; position: sticky; top: 0; z-index: 100; }
+  .nav-logo { font-size: 26px; font-style: italic; color: var(--pink); letter-spacing: 1px; }
+  .nav-links { display: flex; gap: 1.5rem; }
+  .nav-links a { font-size: 14px; color: var(--text-muted); text-decoration: none; cursor: pointer; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--pink); }
+  .nav-order { background: var(--pink); color: #fff; border: none; padding: 8px 20px; border-radius: 20px; font-size: 13px; cursor: pointer; transition: background 0.2s; }
+  .nav-order:hover { background: var(--pink-dark); }
+
+  .hero { background: linear-gradient(135deg, #fff0f3 0%, #fce8ed 50%, #fff5f7 100%); padding: 4rem 2rem; text-align: center; border-bottom: 1px solid #f5c8d4; }
+  .hero-badge { display: inline-block; background: #fce8ed; color: var(--pink); font-size: 12px; padding: 4px 14px; border-radius: 20px; border: 1px solid #f5c8d4; margin-bottom: 1rem; }
+  .hero h1 { font-size: 52px; font-style: italic; color: var(--pink); margin-bottom: 0.5rem; letter-spacing: 2px; }
+  .hero-sub { font-size: 15px; color: var(--text-muted); margin-bottom: 0.5rem; letter-spacing: 3px; text-transform: uppercase; }
+  .hero p { font-size: 16px; color: var(--text-muted); max-width: 480px; margin: 0 auto 2rem; line-height: 1.7; }
+  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--pink); color: #fff; border: none; padding: 12px 28px; border-radius: 24px; font-size: 14px; cursor: pointer; transition: background 0.2s; }
+  .btn-primary:hover { background: var(--pink-dark); }
+  .btn-secondary { background: #fff; color: var(--pink); border: 1.5px solid var(--pink); padding: 12px 28px; border-radius: 24px; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+  .btn-secondary:hover { background: var(--pink-light); }
+  .hero-hearts { font-size: 22px; margin-top: 2rem; letter-spacing: 8px; opacity: 0.4; }
+
+  .marquee-wrap { background: var(--pink); padding: 10px 0; overflow: hidden; }
+  .marquee { display: flex; gap: 2rem; white-space: nowrap; animation: marquee 18s linear infinite; }
+  .marquee span { color: #fff; font-size: 13px; letter-spacing: 1px; }
+  .marquee span::before { content: "✦ "; }
+  @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  section { padding: 3rem 2rem; max-width: 900px; margin: 0 auto; }
+  .section-title { text-align: center; font-size: 22px; color: var(--pink); margin-bottom: 0.4rem; font-style: italic; }
+  .section-sub { text-align: center; font-size: 13px; color: var(--text-muted); margin-bottom: 2rem; letter-spacing: 2px; text-transform: uppercase; }
+
+  .categories { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
+  .cat-card { background: #fff; border: 1px solid #f5c8d4; border-radius: 16px; padding: 1.5rem 1rem; text-align: center; cursor: pointer; transition: all 0.2s; }
+  .cat-card:hover { border-color: var(--pink); background: var(--pink-soft); transform: translateY(-2px); }
+  .cat-icon { font-size: 28px; margin-bottom: 0.5rem; }
+  .cat-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .cat-count { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; }
+  .product-card { background: #fff; border: 1px solid #f5c8d4; border-radius: 16px; overflow: hidden; cursor: pointer; transition: all 0.2s; }
+  .product-card:hover { border-color: var(--pink); transform: translateY(-3px); box-shadow: 0 4px 20px rgba(232,116,138,0.15); }
+  .product-img { height: 140px; display: flex; align-items: center; justify-content: center; font-size: 48px; background: #fff5f7; }
+  .product-info { padding: 0.8rem 1rem; }
+  .product-name { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .product-cat { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+  .product-price { font-size: 15px; color: var(--pink); font-weight: 500; }
+  .product-btn { width: 100%; background: var(--pink-light); color: var(--pink); border: none; padding: 7px; border-radius: 8px; font-size: 12px; cursor: pointer; margin-top: 8px; transition: background 0.2s; }
+  .product-btn:hover { background: var(--pink); color: #fff; }
+  .badge-new { background: var(--pink); color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 10px; float: right; }
+  .badge-hot { background: #ff8c42; color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 10px; float: right; }
+
+  .custom-section { background: #fff; border: 1px solid #f5c8d4; border-radius: 20px; padding: 2.5rem; text-align: center; }
+  .custom-section h3 { font-size: 22px; color: var(--pink); font-style: italic; margin-bottom: 0.5rem; }
+  .custom-section p { font-size: 14px; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.7; }
+  .custom-options { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .custom-opt { background: var(--pink-soft); border: 1px solid #f5c8d4; border-radius: 12px; padding: 0.8rem 1.2rem; font-size: 13px; color: var(--text); display: flex; align-items: center; gap: 6px; }
+  .custom-opt i { color: var(--pink); font-size: 18px; }
+
+  .why-us { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+  .why-card { background: #fff; border: 1px solid #f5c8d4; border-radius: 16px; padding: 1.5rem 1rem; text-align: center; }
+  .why-icon { font-size: 26px; color: var(--pink); margin-bottom: 0.8rem; }
+  .why-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .why-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+  .testimonials { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+  .testi-card { background: #fff; border: 1px solid #f5c8d4; border-radius: 16px; padding: 1.2rem; }
+  .testi-stars { color: var(--pink); font-size: 13px; margin-bottom: 6px; }
+  .testi-text { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px; font-style: italic; }
+  .testi-name { font-size: 12px; font-weight: 500; color: var(--text); }
+  .testi-loc { font-size: 11px; color: var(--text-muted); }
+
+  .order-section { background: var(--pink); border-radius: 20px; padding: 2.5rem; text-align: center; color: #fff; }
+  .order-section h3 { font-size: 24px; font-style: italic; margin-bottom: 0.5rem; }
+  .order-section p { font-size: 14px; opacity: 0.85; margin-bottom: 1.5rem; }
+  .whatsapp-btn { background: #25D366; color: #fff; border: none; padding: 14px 32px; border-radius: 24px; font-size: 15px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: opacity 0.2s; }
+  .whatsapp-btn:hover { opacity: 0.9; }
+  .order-note { font-size: 12px; opacity: 0.7; margin-top: 1rem; }
+
+  footer { background: #fff; border-top: 1px solid #f5c8d4; padding: 2rem; text-align: center; }
+  .footer-logo { font-size: 28px; font-style: italic; color: var(--pink); margin-bottom: 0.5rem; }
+  .footer-tagline { font-size: 12px; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; }
+  .footer-links { display: flex; gap: 1.5rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
+  .footer-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; cursor: pointer; }
+  .footer-links a:hover { color: var(--pink); }
+  .footer-social { display: flex; gap: 1rem; justify-content: center; margin-bottom: 1rem; }
+  .social-btn { width: 36px; height: 36px; border-radius: 50%; background: var(--pink-light); border: 1px solid #f5c8d4; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+  .social-btn:hover { background: var(--pink); }
+  .social-btn:hover i { color: #fff; }
+  .social-btn i { font-size: 16px; color: var(--pink); }
+  .footer-copy { font-size: 12px; color: var(--text-muted); }
+  .delivery-badge { display: inline-block; background: var(--pink-light); color: var(--pink); font-size: 12px; padding: 4px 14px; border-radius: 20px; border: 1px solid #f5c8d4; margin-top: 0.5rem; }
+</style>
+
+<nav>
+  <div class="nav-logo">flowra</div>
+  <div class="nav-links">
+    <a onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">Shop</a>
+    <a onclick="document.getElementById('custom').scrollIntoView({behavior:'smooth'})">Custom</a>
+    <a onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">About</a>
+    <a onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Order</a>
+  </div>
+  <button class="nav-order" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Order Now</button>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">Nepal's Fan Merch Store</div>
+  <h1>flowra</h1>
+  <div class="hero-sub">Anime • Football • Custom Gifts</div>
+  <p>Your one-stop destination for anime merch, football collectibles, and personalized gifts — delivered all over Nepal.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button>
+    <button class="btn-secondary" onclick="document.getElementById('custom').scrollIntoView({behavior:'smooth'})">Custom Order</button>
+  </div>
+  <div class="hero-hearts">♡ ♡ ♡</div>
+</div>
+
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span>Anime Merch</span><span>Football Posters</span><span>Action Figures</span><span>Custom T-shirts</span><span>Stickers</span><span>Keyrings</span><span>Flags</span><span>Custom Cups</span><span>Anime Cards</span><span>Gift Items</span><span>Nationwide Delivery</span>
+    <span>Anime Merch</span><span>Football Posters</span><span>Action Figures</span><span>Custom T-shirts</span><span>Stickers</span><span>Keyrings</span><span>Flags</span><span>Custom Cups</span><span>Anime Cards</span><span>Gift Items</span><span>Nationwide Delivery</span>
+  </div>
+</div>
+
+<section id="categories">
+  <div class="section-title">Shop by Category</div>
+  <div class="section-sub">Find exactly what you are looking for</div>
+  <div class="categories">
+    <div class="cat-card"><div class="cat-icon">🎌</div><div class="cat-name">Anime</div><div class="cat-count">Posters, Figures, Cards</div></div>
+    <div class="cat-card"><div class="cat-icon">⚽</div><div class="cat-name">Football</div><div class="cat-count">Clubs, Players, Flags</div></div>
+    <div class="cat-card"><div class="cat-icon">👕</div><div class="cat-name">Custom Print</div><div class="cat-count">T-shirts, Cups, Bags</div></div>
+    <div class="cat-card"><div class="cat-icon">🎁</div><div class="cat-name">Gift Items</div><div class="cat-count">Keyrings, Stickers, More</div></div>
+    <div class="cat-card"><div class="cat-icon">🏳️</div><div class="cat-name">Flags</div><div class="cat-count">Club & Country</div></div>
+    <div class="cat-card"><div class="cat-icon">🎒</div><div class="cat-name">Bags</div><div class="cat-count">Anime & Football</div></div>
+  </div>
+</section>
+
+<section id="products">
+  <div class="section-title">Popular Products</div>
+  <div class="section-sub">Fan favorites in Nepal</div>
+  <div class="products">
+    <div class="product-card">
+      <div class="product-img">⚔️</div>
+      <div class="product-info">
+        <span class="badge-new">New</span>
+        <div class="product-name">Demon Slayer Poster</div>
+        <div class="product-cat">Anime • A3 Size</div>
+        <div class="product-price">Rs. 250</div>
+        <button class="product-btn" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Order via WhatsApp</button>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">⚽</div>
+      <div class="product-info">
+        <span class="badge-hot">Hot</span>
+        <div class="product-name">Real Madrid Flag</div>
+        <div class="product-cat">Football • Club Flag</div>
+        <div class="product-price">Rs. 400</div>
+        <button class="product-btn" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Order via WhatsApp</button>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">🗡️</div>
+      <div class="product-info">
+        <span class="badge-new">New</span>
+        <div class="product-name">One Piece Action Figure</div>
+        <div class="product-cat">Anime • Collectible</div>
+        <div class="product-price">Rs. 1,200</div>
+        <button class="product-btn" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Order via WhatsApp</button>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">🔑</div>
+      <div class="product-info">
+        <div class="product-name">Anime Keyring Pack</div>
+        <div class="product-cat">Accessories • Set of 3</div>
+        <div class="product-price">Rs. 350</div>
+        <button class="product-btn" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Order via WhatsApp</button>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">🃏</div>
+      <div class="product-info">
+        <span class="badge-hot">Hot</span>
+        <div class="product-name">Anime Card Pack</div>
+        <div class="product-cat">Cards • Pack of 10</div>
+        <div class="product-price">Rs. 300</div>
+        <button class="product-btn" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Order via WhatsApp</button>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-img">🎒</div>
+      <div class="product-info">
+        <div class="product-name">Naruto Printed Bag</div>
+        <div class="product-cat">Anime • Backpack</div>
+        <div class="product-price">Rs. 950</div>
+        <button class="product-btn" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Order via WhatsApp</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="custom">
+  <div class="custom-section">
+    <div class="section-title">Custom Printing</div>
+    <div class="section-sub" style="margin-bottom:1rem">Make it yours</div>
+    <p>Design your own personalized merchandise! From custom t-shirts to printed cups — we bring your ideas to life with premium quality printing.</p>
+    <div class="custom-options">
+      <div class="custom-opt"><i class="ti ti-shirt" aria-hidden="true"></i> T-shirt Printing</div>
+      <div class="custom-opt"><i class="ti ti-cup" aria-hidden="true"></i> Cup Printing</div>
+      <div class="custom-opt"><i class="ti ti-sticker" aria-hidden="true"></i> Custom Stickers</div>
+      <div class="custom-opt"><i class="ti ti-gift" aria-hidden="true"></i> Gift Items</div>
+    </div>
+    <button class="btn-primary" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Start Custom Order</button>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-title">Why Choose Flowra?</div>
+  <div class="section-sub">We deliver happiness</div>
+  <div class="why-us">
+    <div class="why-card">
+      <div class="why-icon"><i class="ti ti-truck-delivery" aria-hidden="true"></i></div>
+      <div class="why-title">Nationwide Delivery</div>
+      <div class="why-desc">We deliver to every corner of Nepal — fast and safely packed</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon"><i class="ti ti-star" aria-hidden="true"></i></div>
+      <div class="why-title">Premium Quality</div>
+      <div class="why-desc">Every product is carefully selected and quality checked before dispatch</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon"><i class="ti ti-heart" aria-hidden="true"></i></div>
+      <div class="why-title">Packed with Love</div>
+      <div class="why-desc">Each order is packed carefully with a thank you card just for you</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon"><i class="ti ti-message-circle" aria-hidden="true"></i></div>
+      <div class="why-title">Fast Response</div>
+      <div class="why-desc">We reply within 1 hour on WhatsApp — your questions matter to us</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-title">What Customers Say</div>
+  <div class="section-sub">Real reviews from real fans</div>
+  <div class="testimonials">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Got my Demon Slayer poster and it looks absolutely amazing! Packaging was perfect and delivery was so fast."</div>
+      <div class="testi-name">Aashish T.</div>
+      <div class="testi-loc">Kathmandu</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Custom t-shirt printing quality is top notch. Ordered for my whole friend group and everyone loved it!"</div>
+      <div class="testi-name">Priya S.</div>
+      <div class="testi-loc">Pokhara</div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Best online merch store in Nepal! Got Real Madrid flag and Messi poster — both are perfect quality."</div>
+      <div class="testi-name">Rohan K.</div>
+      <div class="testi-loc">Chitwan</div>
+    </div>
+  </div>
+</section>
+
+<section id="order" style="padding-bottom: 1rem;">
+  <div class="order-section">
+    <h3>Ready to Order?</h3>
+    <p>Chat with us directly on WhatsApp — we reply fast and guide you through every step of your order!</p>
+    <button class="whatsapp-btn" onclick="openLink('https://wa.me/977XXXXXXXXXX?text=Hi! I want to order from Flowra Store')">
+      <i class="ti ti-brand-whatsapp" aria-hidden="true"></i> Chat on WhatsApp
+    </button>
+    <div class="order-note">Available 9am – 9pm daily • Fast reply guaranteed • Nationwide delivery across Nepal</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">flowra</div>
+  <div class="footer-tagline">Anime • Football • Custom Gifts • Nepal</div>
+  <div class="footer-links">
+    <a onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">Shop</a>
+    <a onclick="document.getElementById('custom').scrollIntoView({behavior:'smooth'})">Custom Order</a>
+    <a onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">About Us</a>
+    <a onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">Contact</a>
+  </div>
+  <div class="footer-social">
+    <div class="social-btn"><i class="ti ti-brand-instagram" aria-hidden="true"></i></div>
+    <div class="social-btn"><i class="ti ti-brand-facebook" aria-hidden="true"></i></div>
+    <div class="social-btn"><i class="ti ti-brand-tiktok" aria-hidden="true"></i></div>
+    <div class="social-btn"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i></div>
+  </div>
+  <div class="delivery-badge">Delivering all over Nepal</div>
+  <div class="footer-copy" style="margin-top:1rem">© 2026 Flowra Store. Made with love in Nepal.</div>
+</footer>
